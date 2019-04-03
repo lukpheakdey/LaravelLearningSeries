@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class UserController extends Controller
+{
+    public function index(){
+        $users =  User::all();
+
+        //dd($user);
+        return view("users", compact('users'));
+    }
+
+    public function create(){
+        return view("create");
+    }
+
+    public function store(Request $request){
+        User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+        ]);
+
+        //Session::flash('success', 'User create successfully.');
+        return redirect('/users');
+    }
+
+    public function edit($id){
+        $user = User::find($id);
+        if (empty($user)) {
+            //\Session::flash('error', 'User not found');
+            return redirect('users');
+        }
+        return view('edit', compact('user'));
+    }
+
+
+    public function update($id, Request $request)
+    {
+        $user = User::find($id);
+        if (empty($user)) {
+            //\Session::flash('error', 'User not found');
+            return redirect('users');
+        }
+        $user->update([
+            'name' => $request->get('name'),
+            'email' => $request->get('email')
+        ]);
+        // pass data to notification class
+        // $user->notify(new UserNotification([
+        //     'message' => 'Your profile updated.'
+        // ]));
+        //\Session::flash('success', 'User updated successfully.');
+        return redirect('/users');
+    }
+}
