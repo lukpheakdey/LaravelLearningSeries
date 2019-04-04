@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\User;
 
 class UserController extends Controller
@@ -18,7 +19,20 @@ class UserController extends Controller
         return view("create");
     }
 
-    public function store(Request $request){
+    public function store(UserRequest $request){
+
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6'
+        ]);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),

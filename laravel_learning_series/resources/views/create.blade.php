@@ -2,6 +2,15 @@
 
 @section("content")
 
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{!! $error !!}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <h2>Add New User</h2>
     <form class="form-horizontal" action="/users" method="post" enctype="multipart/form-data">
         {!! csrf_field() !!}
@@ -25,7 +34,7 @@
                 <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default">Save</button>
