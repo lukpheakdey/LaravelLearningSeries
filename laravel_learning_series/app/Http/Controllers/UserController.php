@@ -57,4 +57,27 @@ class UserController extends Controller
         //\Session::flash('success', 'User updated successfully.');
         return redirect('/users');
     }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        if (empty($user)) {
+            //\Session::flash('error', 'User not found');
+            return redirect('users');
+        }
+        return view('detail', compact('user'));
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if (empty($user)) {
+            //\Session::flash('error', 'User not found');
+            return redirect('users');
+        }
+        $user->delete();
+        //\Session::flash('success', 'User deleted successfully.');
+        return redirect('users');
+    }
+
 }

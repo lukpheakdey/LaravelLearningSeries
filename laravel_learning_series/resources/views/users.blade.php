@@ -37,7 +37,7 @@
                 <td>
                     <a href="/users/{!! $user->id !!}/edit" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                     <span> </span>
-                    <a href="/users/{!! $user->id !!}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a></td>
+                    <a href="/users/{!! $user->id !!}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete </a></td>
             </tr>
             @endforeach
         </tbody>
