@@ -12,8 +12,15 @@ use Image;
 class UserController extends Controller
 {
     public function index(){
-        $users = User::orderBy("id", "DESC")->paginate(10);
+        //   $user = User::find(1);
+        // to display the notifications in web application
+//        dd($user->notifications);
+//        $user->notify(new UserNotification([
+//            'message' => 'This is a queueable notifications'
+//        ]));
+//        exit()
 
+        $users = User::orderBy("id", "DESC")->paginate(10);
         //dd($user);
         return view("users", compact('users'));
     }
@@ -78,9 +85,9 @@ class UserController extends Controller
             'email' => $request->get('email')
         ]);
         // pass data to notification class
-        // $user->notify(new UserNotification([
-        //     'message' => 'Your profile updated.'
-        // ]));
+        $user->notify(new UserNotification([
+            'message' => 'Your profile updated.'
+        ]));
         //\Session::flash('success', 'User updated successfully.');
         return redirect('/users');
     }
