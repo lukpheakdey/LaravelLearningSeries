@@ -52,12 +52,14 @@ class UserController extends Controller
         $image->move($path, $filename);
         //Image::make($path . $filename)->resize(100, 100)->save('thumbs/'.$filename);
 
-        User::create([
+        $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => $request->get('password'),
             'image' => $filename,
         ]);
+
+        event(new UserEvent($user));
 
         //Session::flash('success', 'User create successfully.');
         return redirect('/users');
