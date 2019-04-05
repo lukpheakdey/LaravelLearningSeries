@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserEvent;
+use App\Notifications\UserNotification;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use App\User;
+use Image;
 
 class UserController extends Controller
 {
     public function index(){
-        $users =  User::all();
+        $users = User::orderBy("id", "DESC")->paginate(10);
 
         //dd($user);
         return view("users", compact('users'));
@@ -33,10 +36,20 @@ class UserController extends Controller
                 ->withInput();
         }
 
+        $image = $request->file('photo');
+        $filename = uniqid() . $image->getClientOriginalName();
+        $path = 'images/';
+        $filename =  $path . $filename;
+
+        //dd($filename);
+        $image->move($path, $filename);
+        //Image::make($path . $filename)->resize(100, 100)->save('thumbs/'.$filename);
+
         User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => $request->get('password'),
+            'image' => $filename,
         ]);
 
         //Session::flash('success', 'User create successfully.');
