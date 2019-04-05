@@ -12,13 +12,13 @@ use Image;
 class UserController extends Controller
 {
     public function index(){
-        //   $user = User::find(1);
+        $user = User::find(1);
         // to display the notifications in web application
-//        dd($user->notifications);
-//        $user->notify(new UserNotification([
-//            'message' => 'This is a queueable notifications'
-//        ]));
-//        exit()
+       //dd($user->notifications);
+       //$user->notify(new UserNotification([
+    //        'message' => 'This is a queueable notifications'
+    //    ]));
+       //exit();
 
         $users = User::orderBy("id", "DESC")->paginate(10);
         //dd($user);
