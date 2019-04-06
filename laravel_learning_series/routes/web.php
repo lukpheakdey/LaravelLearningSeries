@@ -30,4 +30,7 @@ Route::get('users/{id}', 'UserController@show');
 
 Route::delete('users/{id}', 'UserController@destroy');
 
+Route::get('charge', 'ChargeController@index');
+Route::post('charge', 'ChargeController@store');
+
 
